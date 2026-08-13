@@ -30,6 +30,7 @@ public class PayrollController {
 
     private final PayrollService payrollService;
     private final ExportService exportService;
+    private final com.example.hrm.repository.EmployeeRepository employeeRepository;
 
     @PostMapping("/process")
     @PreAuthorize("hasAnyAuthority('ROLE_HR', 'ROLE_ADMIN')")
@@ -54,7 +55,18 @@ public class PayrollController {
 
     @GetMapping("/employee/{employeeId}")
     @Operation(summary = "Get Employee Payroll History", description = "Fetches payroll history for a specific employee")
-    public ResponseEntity<ApiResponse<List<PayrollResponseDto>>> getEmployeePayrollHistory(@PathVariable Long employeeId) {
+    public ResponseEntity<ApiResponse<List<PayrollResponseDto>>> getEmployeePayrollHistory(
+            @PathVariable Long employeeId,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        boolean isHrOrAdmin = principal.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_HR") || a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isHrOrAdmin) {
+            com.example.hrm.entity.Employee loggedInEmp = employeeRepository.findByUserId(principal.getId()).orElse(null);
+            if (loggedInEmp == null || !loggedInEmp.getId().equals(employeeId)) {
+                throw new org.springframework.security.access.AccessDeniedException("Unauthorized: You can only view your own payroll history");
+            }
+        }
         return ResponseEntity.ok(ApiResponse.success("Employee payroll history fetched", payrollService.getEmployeePayrollHistory(employeeId)));
     }
 
