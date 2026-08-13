@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "a9b8c7d6-e5f4-4a3b-8c2d-1e0f9a8b7c6d",
+		"name": "HRM Payroll & Leave Management System API",
+		"description": "Complete Postman collection for testing HRM Salary Structure & Payslip Automation Module APIs.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 Authentication",
+			"item": [
+				{
+					"name": "HR Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"hr@hrm.com\",\n  \"password\": \"Hr@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Employee Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"employee@hrm.com\",\n  \"password\": \"Employee@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "02 Employees",
+			"item": [
+				{
+					"name": "Get All Employees",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees"]
+						}
+					}
+				},
+				{
+					"name": "Create Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"employeeCode\": \"EMP006\",\n  \"firstName\": \"Suresh\",\n  \"lastName\": \"Raina\",\n  \"email\": \"suresh.raina@hrm.com\",\n  \"phone\": \"9876543299\",\n  \"dateOfJoining\": \"2026-02-01\",\n  \"departmentId\": 1,\n  \"designation\": \"Backend Engineer\",\n  \"password\": \"Employee@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "03 Salary Structures",
+			"item": [
+				{
+					"name": "Get All Salary Structures",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/salary-structures",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "salary-structures"]
+						}
+					}
+				},
+				{
+					"name": "Create Salary Structure",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Lead Architect Structure\",\n  \"description\": \"Band 4 Technical Lead\",\n  \"basicSalary\": 35000,\n  \"hra\": 14000,\n  \"specialAllowance\": 11000,\n  \"pf\": 4200,\n  \"esi\": 0,\n  \"professionalTax\": 200\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/salary-structures",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "salary-structures"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "04 Employee Salary",
+			"item": [
+				{
+					"name": "Assign Salary Structure",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"employeeId\": 1,\n  \"salaryStructureId\": 1,\n  \"effectiveFrom\": \"2026-07-01\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/salary-structures/assign",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "salary-structures", "assign"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "05 Leave Policies",
+			"item": [
+				{
+					"name": "Get Leave Policies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/leaves/policies",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "leaves", "policies"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "06 Leave Applications",
+			"item": [
+				{
+					"name": "Apply for Leave",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"leaveType\": \"CL\",\n  \"fromDate\": \"2026-08-18\",\n  \"toDate\": \"2026-08-19\",\n  \"reason\": \"Family function\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/leaves",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "leaves"]
+						}
+					}
+				},
+				{
+					"name": "Approve Leave",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/leaves/1/approve",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "leaves", "1", "approve"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "07 Payroll",
+			"item": [
+				{
+					"name": "Process Monthly Payroll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"month\": 8,\n  \"year\": 2026\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/payroll/process",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payroll", "process"]
+						}
+					}
+				},
+				{
+					"name": "Export Payroll Excel",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payroll/export/excel?month=8&year=2026",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payroll", "export", "excel"],
+							"query": [
+								{ "key": "month", "value": "8" },
+								{ "key": "year", "value": "2026" }
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "08 Payslips",
+			"item": [
+				{
+					"name": "Download Payslip PDF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/payslips/1/download",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "payslips", "1", "download"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "09 Email Delivery",
+			"item": [
+				{
+					"name": "Get Email Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/email-delivery/logs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "email-delivery", "logs"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "10 Dashboard",
+			"item": [
+				{
+					"name": "Get HR Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/dashboard/hr",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "dashboard", "hr"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8085" },
+		{ "key": "token", "value": "" }
+	]
+}

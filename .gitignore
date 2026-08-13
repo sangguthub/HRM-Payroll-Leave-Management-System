@@ -1,0 +1,23 @@
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+
+# Node / React
+node_modules/
+dist/
+.vite/
+
+# Application generated files
+payslips/
+*.log
+
+# OS generated
+.DS_Store
+Thumbs.db
