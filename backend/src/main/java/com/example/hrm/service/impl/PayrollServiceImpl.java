@@ -6,7 +6,6 @@ import com.example.hrm.entity.*;
 import com.example.hrm.enums.EmployeeStatus;
 import com.example.hrm.enums.PayrollStatus;
 import com.example.hrm.exception.BadRequestException;
-import com.example.hrm.exception.PayrollAlreadyProcessedException;
 import com.example.hrm.exception.ResourceNotFoundException;
 import com.example.hrm.repository.*;
 import com.example.hrm.service.EmailService;

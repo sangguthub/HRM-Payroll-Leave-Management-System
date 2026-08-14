@@ -2,7 +2,6 @@ package com.example.hrm.controller;
 
 import com.example.hrm.dto.auth.LoginRequest;
 import com.example.hrm.dto.auth.LoginResponse;
-import com.example.hrm.dto.common.ApiResponse;
 import com.example.hrm.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

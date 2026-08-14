@@ -36,7 +36,7 @@ public class DataInitializer implements CommandLineRunner {
         log.info("Initializing HRM seed data...");
 
         // 1. Users & Credentials
-        User adminUser = userRepository.save(User.builder()
+        userRepository.save(User.builder()
                 .name("Admin Manager")
                 .email("admin@hrm.com")
                 .password(passwordEncoder.encode("Admin@123"))
@@ -44,7 +44,7 @@ public class DataInitializer implements CommandLineRunner {
                 .active(true)
                 .build());
 
-        User hrUser = userRepository.save(User.builder()
+        userRepository.save(User.builder()
                 .name("HR Manager")
                 .email("hr@hrm.com")
                 .password(passwordEncoder.encode("Hr@123"))

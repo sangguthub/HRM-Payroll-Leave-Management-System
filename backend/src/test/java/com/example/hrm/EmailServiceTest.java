@@ -1,6 +1,5 @@
 package com.example.hrm;
 
-import com.example.hrm.dto.email.EmailLogResponseDto;
 import com.example.hrm.entity.EmailDeliveryLog;
 import com.example.hrm.entity.Employee;
 import com.example.hrm.entity.Payroll;
@@ -20,7 +19,6 @@ import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

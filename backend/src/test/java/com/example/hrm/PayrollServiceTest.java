@@ -53,7 +53,6 @@ class PayrollServiceTest {
         BigDecimal pf = new BigDecimal("2400.00");
         BigDecimal esi = new BigDecimal("0.00");
         BigDecimal profTax = new BigDecimal("200.00");
-        BigDecimal totalDeductions = pf.add(esi).add(profTax);
 
         salaryStructure = SalaryStructure.builder()
                 .id(10L)
