@@ -9,6 +9,7 @@ import com.example.hrm.exception.LeaveBalanceException;
 import com.example.hrm.exception.ResourceNotFoundException;
 import com.example.hrm.repository.*;
 import com.example.hrm.service.LeaveService;
+import com.example.hrm.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class LeaveServiceImpl implements LeaveService {
     private final LeaveApplicationRepository applicationRepository;
     private final EmployeeRepository employeeRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Override
     public List<LeavePolicyDto> getAllPolicies() {
@@ -158,6 +160,17 @@ public class LeaveServiceImpl implements LeaveService {
         application.setApprovedBy(approver);
 
         LeaveApplication updated = applicationRepository.save(application);
+
+        // Auto-trigger in-app notification to employee
+        if (application.getEmployee().getUser() != null) {
+            notificationService.createNotification(
+                    application.getEmployee().getUser(),
+                    "Leave Request Approved",
+                    "Your " + application.getLeaveType() + " leave request for " + application.getNumberOfDays() + " day(s) (" + application.getFromDate() + " to " + application.getToDate() + ") has been approved.",
+                    com.example.hrm.enums.NotificationType.LEAVE_APPROVED
+            );
+        }
+
         return mapToResponse(updated);
     }
 
@@ -179,6 +192,17 @@ public class LeaveServiceImpl implements LeaveService {
         application.setRejectionReason(rejectionReason);
 
         LeaveApplication updated = applicationRepository.save(application);
+
+        // Auto-trigger in-app notification to employee
+        if (application.getEmployee().getUser() != null) {
+            notificationService.createNotification(
+                    application.getEmployee().getUser(),
+                    "Leave Request Rejected",
+                    "Your " + application.getLeaveType() + " leave request for " + application.getFromDate() + " was rejected. Reason: " + (rejectionReason != null ? rejectionReason : "Not specified"),
+                    com.example.hrm.enums.NotificationType.LEAVE_REJECTED
+            );
+        }
+
         return mapToResponse(updated);
     }
 

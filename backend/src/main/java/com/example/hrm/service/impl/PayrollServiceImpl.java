@@ -9,6 +9,7 @@ import com.example.hrm.exception.BadRequestException;
 import com.example.hrm.exception.ResourceNotFoundException;
 import com.example.hrm.repository.*;
 import com.example.hrm.service.EmailService;
+import com.example.hrm.service.NotificationService;
 import com.example.hrm.service.PayrollService;
 import com.example.hrm.service.PayslipPdfService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class PayrollServiceImpl implements PayrollService {
     private final UserRepository userRepository;
     private final PayslipPdfService payslipPdfService;
     private final EmailService emailService;
+    private final NotificationService notificationService;
     private final PayslipRepository payslipRepository;
     private final EmailDeliveryLogRepository emailLogRepository;
 
@@ -121,6 +123,17 @@ public class PayrollServiceImpl implements PayrollService {
 
             // 6. Send Email Automation
             emailService.sendPayslipEmail(payslip);
+
+            // 7. Trigger In-App Notification to Employee
+            if (emp.getUser() != null) {
+                String monthName = Month.of(request.getMonth()).getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+                notificationService.createNotification(
+                        emp.getUser(),
+                        "Payslip Generated",
+                        "Your payslip for " + monthName + " " + request.getYear() + " (Net Pay: ₹" + savedPayroll.getNetSalary() + ") is now available for download.",
+                        com.example.hrm.enums.NotificationType.PAYSLIP_GENERATED
+                );
+            }
 
             processedList.add(mapToDto(savedPayroll));
         }
