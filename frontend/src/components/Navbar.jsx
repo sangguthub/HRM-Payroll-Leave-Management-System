@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
-import { Search, Bell, LogOut, ShieldCheck, UserCheck, Briefcase, Sun, Moon } from 'lucide-react';
+import { Search, Bell, LogOut, ShieldCheck, UserCheck, Briefcase, Sun, Moon, Sparkles } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -11,67 +11,73 @@ export default function Navbar() {
 
   const roleColor =
     user.role === 'ROLE_ADMIN'
-      ? 'bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+      ? 'bg-indigo-50/90 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border-indigo-200/90 dark:border-indigo-800 shadow-2xs'
       : user.role === 'ROLE_HR'
-      ? 'bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800'
-      : 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800';
+      ? 'bg-blue-50/90 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 border-blue-200/90 dark:border-blue-800 shadow-2xs'
+      : 'bg-emerald-50/90 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border-emerald-200/90 dark:border-emerald-800 shadow-2xs';
 
   const RoleIcon = user.role === 'ROLE_ADMIN' ? ShieldCheck : user.role === 'ROLE_HR' ? Briefcase : UserCheck;
 
   return (
-    <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs transition-colors duration-200">
+    <header className="h-16 bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs transition-all duration-300">
       {/* Global Search Bar */}
-      <div className="relative w-72">
+      <div className="relative w-80">
         <Search size={16} className="absolute left-3.5 top-2.5 text-slate-400 dark:text-slate-500" />
         <input
           type="text"
           placeholder="Search employees, payroll, payslips..."
-          className="w-full pl-9 pr-3 py-1.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-700 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+          className="w-full pl-9 pr-3 py-2 bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700/80 rounded-xl text-xs font-medium text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 focus:outline-none shadow-inner transition-all duration-200"
         />
       </div>
 
       {/* Right Controls */}
       <div className="flex items-center gap-3">
+        {/* System Active Badge */}
+        <div className="hidden md:flex items-center gap-1.5 px-3 py-1 bg-emerald-50/80 dark:bg-emerald-950/60 border border-emerald-200/80 dark:border-emerald-800/60 rounded-full text-[11px] font-bold text-emerald-700 dark:text-emerald-300 shadow-2xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          System Active
+        </div>
+
         {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}
-          className="p-2 text-slate-500 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 rounded-xl transition duration-200 flex items-center justify-center"
-          title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-
+          className="relative p-2.5 text-slate-600 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-400 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-amber-50 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 shadow-2xs"
+          title={isDark ? 'Switch to Vibrant Light Mode' : 'Switch to Dark Mode'}
         >
           {isDark ? (
             <Sun size={18} className="text-amber-400 animate-spin-slow" />
           ) : (
-            <Moon size={18} className="text-slate-600" />
+            <Moon size={18} className="text-indigo-600" />
           )}
         </button>
 
         {/* Notification Pill */}
-        <button className="relative p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition">
+        <button className="relative p-2.5 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-slate-200 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-slate-700/80 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition duration-200">
           <Bell size={18} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white dark:ring-slate-900"></span>
+          <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white dark:ring-slate-900 animate-ping"></span>
+          <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white dark:ring-slate-900"></span>
         </button>
 
-        <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
+        <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-1"></div>
 
         {/* User Info & Role Pill */}
         <div className="flex items-center gap-3">
           <div className="text-right">
             <div className="flex items-center justify-end gap-1.5">
-              <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex items-center gap-1 ${roleColor}`}>
-                <RoleIcon size={10} /> {user.role?.replace('ROLE_', '')}
+              <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1.5 ${roleColor}`}>
+                <RoleIcon size={11} /> {user.role?.replace('ROLE_', '')}
               </span>
             </div>
-            <p className="text-xs font-bold text-slate-800 dark:text-slate-200 mt-0.5">{user.name}</p>
+            <p className="text-xs font-extrabold text-slate-900 dark:text-slate-100 mt-1 tracking-tight">{user.name}</p>
           </div>
 
-          <div className="w-10 h-10 rounded-xl gradient-primary text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/20">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-purple-600 text-white flex items-center justify-center font-black text-sm shadow-md shadow-indigo-500/25 border border-indigo-400/30">
             {user.name?.[0]}
           </div>
 
           <button
             onClick={logout}
-            className="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition ml-1"
+            className="p-2.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition duration-200 hover:scale-105 active:scale-95"
             title="Sign Out"
           >
             <LogOut size={18} />
