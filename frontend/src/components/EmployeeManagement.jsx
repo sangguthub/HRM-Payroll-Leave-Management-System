@@ -66,37 +66,37 @@ export default function EmployeeManagement() {
   return (
     <div className="space-y-6">
       {/* Header controls */}
-      <div className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-wrap gap-4 justify-between items-center">
+      <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-wrap gap-4 justify-between items-center transition-colors duration-200">
         <div className="relative flex-1 max-w-xs">
-          <Search size={18} className="absolute left-3 top-2.5 text-gray-400" />
+          <Search size={18} className="absolute left-3 top-2.5 text-slate-400 dark:text-slate-500" />
           <input
             type="text"
             placeholder="Search employees..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg text-sm shadow transition"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg text-sm shadow-md transition"
         >
           <UserPlus size={18} /> Add Employee
         </button>
       </div>
 
       {/* Employee List Table */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <h2 className="font-bold text-gray-800 flex items-center gap-2">
-            <Users size={18} className="text-blue-600" /> Employee Directory ({filtered.length})
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden transition-colors duration-200">
+        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+          <h2 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+            <Users size={18} className="text-blue-600 dark:text-blue-400" /> Employee Directory ({filtered.length})
           </h2>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-600">
-            <thead className="bg-gray-50 text-gray-700 uppercase text-xs">
+          <table className="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+            <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 uppercase text-xs">
               <tr>
                 <th className="p-3">Emp ID</th>
                 <th className="p-3">Employee Name</th>
@@ -108,26 +108,32 @@ export default function EmployeeManagement() {
                 <th className="p-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {loading ? (
-                <tr><td colSpan="8" className="text-center p-6">Loading employees...</td></tr>
+                <tr><td colSpan="8" className="text-center p-6 text-slate-400">Loading employees...</td></tr>
               ) : filtered.length === 0 ? (
-                <tr><td colSpan="8" className="text-center p-6">No employees found.</td></tr>
+                <tr><td colSpan="8" className="text-center p-6 text-slate-400">No employees found.</td></tr>
               ) : (
                 filtered.map((emp) => (
-                  <tr key={emp.id} className="hover:bg-gray-50/50">
-                    <td className="p-3 font-mono text-xs font-bold text-blue-600">{emp.employeeCode}</td>
-                    <td className="p-3 font-semibold text-gray-800">{emp.fullName}</td>
+                  <tr key={emp.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition">
+                    <td className="p-3 font-mono text-xs font-bold text-blue-600 dark:text-blue-400">{emp.employeeCode}</td>
+                    <td className="p-3 font-semibold text-slate-800 dark:text-slate-200">{emp.fullName}</td>
                     <td className="p-3 text-xs">
-                      <div>{emp.email}</div>
-                      <div className="text-gray-400">{emp.phone}</div>
+                      <div className="text-slate-700 dark:text-slate-300">{emp.email}</div>
+                      <div className="text-slate-400 dark:text-slate-500">{emp.phone}</div>
                     </td>
-                    <td className="p-3"><span className="bg-slate-100 text-slate-700 text-xs px-2.5 py-1 rounded-md">{emp.departmentName}</span></td>
+                    <td className="p-3">
+                      <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+                        {emp.departmentName}
+                      </span>
+                    </td>
                     <td className="p-3">{emp.designation}</td>
                     <td className="p-3 text-xs">{emp.dateOfJoining}</td>
                     <td className="p-3">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
-                        emp.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                        emp.status === 'ACTIVE'
+                          ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                          : 'bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800'
                       }`}>
                         {emp.status}
                       </span>
@@ -135,7 +141,7 @@ export default function EmployeeManagement() {
                     <td className="p-3 text-right">
                       <button
                         onClick={() => handleDeactivate(emp.id)}
-                        className="text-rose-600 hover:text-rose-800 p-1.5 rounded hover:bg-rose-50 transition"
+                        className="text-rose-600 dark:text-rose-400 hover:text-rose-800 dark:hover:text-rose-300 p-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40 transition"
                         title="Deactivate"
                       >
                         <Trash2 size={16} />
@@ -151,65 +157,65 @@ export default function EmployeeManagement() {
 
       {/* Add Employee Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white max-w-lg w-full rounded-2xl p-6 shadow-2xl space-y-4">
-            <h3 className="text-lg font-bold text-gray-800">Add New Employee</h3>
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 max-w-lg w-full rounded-2xl p-6 shadow-2xl space-y-4 text-slate-800 dark:text-slate-100">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white">Add New Employee</h3>
             <form onSubmit={handleSubmit} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-medium text-gray-600 mb-1">Employee Code</label>
+                  <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Employee Code</label>
                   <input
                     type="text"
                     required
                     value={formData.employeeCode}
                     onChange={(e) => setFormData({ ...formData, employeeCode: e.target.value })}
                     placeholder="EMP006"
-                    className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-gray-600 mb-1">Email</label>
+                  <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Email</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="new.emp@company.com"
-                    className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-medium text-gray-600 mb-1">First Name</label>
+                  <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">First Name</label>
                   <input
                     type="text"
                     required
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                    className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-gray-600 mb-1">Last Name</label>
+                  <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Last Name</label>
                   <input
                     type="text"
                     required
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                    className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-medium text-gray-600 mb-1">Department</label>
+                  <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Department</label>
                   <select
                     value={formData.departmentId}
                     onChange={(e) => setFormData({ ...formData, departmentId: Number(e.target.value) })}
-                    className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   >
                     <option value={1}>Engineering</option>
                     <option value={2}>Human Resources</option>
@@ -217,22 +223,22 @@ export default function EmployeeManagement() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-medium text-gray-600 mb-1">Designation</label>
+                  <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Designation</label>
                   <input
                     type="text"
                     required
                     value={formData.designation}
                     onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
-                    className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t">
+              <div className="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium"
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg font-medium"
                 >
                   Cancel
                 </button>

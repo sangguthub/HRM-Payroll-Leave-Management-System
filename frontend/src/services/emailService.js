@@ -9,4 +9,8 @@ export const emailService = {
     const res = await api.post(`/email-delivery/${id}/retry`);
     return res.data.data;
   },
+  sendPayslipEmail: async (payslipId) => {
+    const res = await api.post(`/email-delivery/payslip/${payslipId}/send`);
+    return res.data.data;
+  },
 };

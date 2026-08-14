@@ -33,6 +33,7 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
     private final EmailDeliveryLogRepository emailLogRepository;
+    private final com.example.hrm.repository.PayslipRepository payslipRepository;
 
     @Override
     @Transactional
@@ -51,6 +52,21 @@ public class EmailServiceImpl implements EmailService {
                 .build();
 
         return executeSendEmail(emailLog, payslip.getFilePath());
+    }
+
+    @Override
+    @Transactional
+    public EmailDeliveryLog sendPayslipEmailByPayslipId(Long payslipId) {
+        Payslip payslip = payslipRepository.findById(payslipId)
+                .orElseThrow(() -> new ResourceNotFoundException("Payslip not found with ID: " + payslipId));
+
+        EmailDeliveryLog existingLog = emailLogRepository.findTopByPayslipIdOrderByIdDesc(payslipId).orElse(null);
+        if (existingLog != null) {
+            existingLog.setRetryCount(existingLog.getRetryCount() + 1);
+            return executeSendEmail(existingLog, payslip.getFilePath());
+        }
+
+        return sendPayslipEmail(payslip);
     }
 
     @Override
@@ -84,8 +100,22 @@ public class EmailServiceImpl implements EmailService {
         return count;
     }
 
+    @org.springframework.beans.factory.annotation.Value("${app.mail.mock-mode:true}")
+    private boolean mockMode;
+
+    @org.springframework.beans.factory.annotation.Value("${spring.mail.password:mock-app-password}")
+    private String mailPassword;
+
     private EmailDeliveryLog executeSendEmail(EmailDeliveryLog emailLog, String attachmentFilePath) {
         try {
+            if (mockMode || (mailPassword != null && mailPassword.toLowerCase().contains("mock"))) {
+                emailLog.setStatus(EmailStatus.SENT);
+                emailLog.setSentAt(LocalDateTime.now());
+                emailLog.setFailureReason(null);
+                log.info("Payslip email sent successfully (Mock Mode active) to {}", emailLog.getRecipientEmail());
+                return emailLogRepository.save(emailLog);
+            }
+
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 

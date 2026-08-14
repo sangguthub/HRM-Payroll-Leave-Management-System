@@ -78,17 +78,17 @@ export default function SalaryStructure() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* 1. Assign Salary Section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-          <UserCheck size={20} className="text-blue-600" /> Assign Salary Structure
+      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-6 space-y-4 transition-colors duration-200">
+        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+          <UserCheck size={20} className="text-blue-600 dark:text-blue-400" /> Assign Salary Structure
         </h2>
         <form onSubmit={handleAssignStructure} className="space-y-4 text-xs">
           <div>
-            <label className="block font-semibold text-gray-600 mb-1">Select Employee</label>
+            <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Select Employee</label>
             <select
               value={selectedEmpId}
               onChange={(e) => setSelectedEmpId(e.target.value)}
-              className="w-full p-2.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
             >
               {employees.map((emp) => (
                 <option key={emp.id} value={emp.id}>{emp.fullName} ({emp.employeeCode})</option>
@@ -97,11 +97,11 @@ export default function SalaryStructure() {
           </div>
 
           <div>
-            <label className="block font-semibold text-gray-600 mb-1">Select Salary Template</label>
+            <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Select Salary Template</label>
             <select
               value={selectedStructureId}
               onChange={(e) => setSelectedStructureId(e.target.value)}
-              className="w-full p-2.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
             >
               {structures.map((st) => (
                 <option key={st.id} value={st.id}>{st.name} (Gross: ₹{st.grossSalary?.toLocaleString()})</option>
@@ -110,33 +110,33 @@ export default function SalaryStructure() {
           </div>
 
           <div>
-            <label className="block font-semibold text-gray-600 mb-1">Effective Date</label>
+            <label className="block font-semibold text-slate-600 dark:text-slate-300 mb-1">Effective Date</label>
             <input
               type="date"
               value={effectiveFrom}
               onChange={(e) => setEffectiveFrom(e.target.value)}
-              className="w-full p-2.5 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow transition"
+            className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-md transition"
           >
             Assign Salary & Update History
           </button>
         </form>
 
-        <div className="border-t pt-4 mt-4">
-          <h3 className="font-bold text-gray-700 mb-2">Configured Structures ({structures.length})</h3>
+        <div className="border-t border-slate-100 dark:border-slate-800 pt-4 mt-4">
+          <h3 className="font-bold text-slate-700 dark:text-slate-300 mb-2">Configured Structures ({structures.length})</h3>
           <div className="space-y-2">
             {structures.map((s) => (
-              <div key={s.id} className="p-3 bg-gray-50 rounded-lg text-xs border border-gray-200">
-                <div className="font-bold text-gray-800">{s.name}</div>
-                <div className="text-gray-500 flex justify-between mt-1">
+              <div key={s.id} className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg text-xs border border-slate-200 dark:border-slate-700">
+                <div className="font-bold text-slate-800 dark:text-slate-200">{s.name}</div>
+                <div className="text-slate-500 dark:text-slate-400 flex justify-between mt-1">
                   <span>Gross: ₹{s.grossSalary?.toLocaleString()}</span>
-                  <span className="font-bold text-emerald-600">Net: ₹{s.netSalary?.toLocaleString()}</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">Net: ₹{s.netSalary?.toLocaleString()}</span>
                 </div>
               </div>
             ))}
@@ -145,70 +145,70 @@ export default function SalaryStructure() {
       </div>
 
       {/* 2. Configure / Add New Salary Template */}
-      <div className="lg:col-span-2 bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+      <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs p-6 transition-colors duration-200">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-              <Wallet size={20} className="text-blue-600" /> Create Salary Component Structure
+            <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
+              <Wallet size={20} className="text-blue-600 dark:text-blue-400" /> Create Salary Component Structure
             </h2>
-            <p className="text-xs text-gray-500">Calculates Gross, Deductions, and Net Salary dynamically</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Calculates Gross, Deductions, and Net Salary dynamically</p>
           </div>
         </div>
 
         <form onSubmit={handleCreateStructure} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">Structure Template Name</label>
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Structure Template Name</label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full p-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">Description / Grade</label>
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Description / Grade</label>
               <input
                 type="text"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full p-2 border border-gray-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
 
           {/* Earnings */}
           <div>
-            <h3 className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Earnings Components</h3>
+            <h3 className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-2">Earnings Components</h3>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Basic Salary (₹)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">Basic Salary (₹)</label>
                 <input
                   type="number"
                   value={formData.basicSalary}
                   onChange={(e) => setFormData({ ...formData, basicSalary: Number(e.target.value) })}
-                  className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">HRA (₹)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">HRA (₹)</label>
                 <input
                   type="number"
                   value={formData.hra}
                   onChange={(e) => setFormData({ ...formData, hra: Number(e.target.value) })}
-                  className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Special Allowance (₹)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">Special Allowance (₹)</label>
                 <input
                   type="number"
                   value={formData.specialAllowance}
                   onChange={(e) => setFormData({ ...formData, specialAllowance: Number(e.target.value) })}
-                  className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
@@ -217,34 +217,34 @@ export default function SalaryStructure() {
 
           {/* Deductions */}
           <div>
-            <h3 className="text-xs font-bold text-rose-700 uppercase tracking-wider mb-2">Deductions Components</h3>
+            <h3 className="text-xs font-bold text-rose-700 dark:text-rose-400 uppercase tracking-wider mb-2">Deductions Components</h3>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Provident Fund (PF) (₹)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">Provident Fund (PF) (₹)</label>
                 <input
                   type="number"
                   value={formData.pf}
                   onChange={(e) => setFormData({ ...formData, pf: Number(e.target.value) })}
-                  className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">ESI (₹)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">ESI (₹)</label>
                 <input
                   type="number"
                   value={formData.esi}
                   onChange={(e) => setFormData({ ...formData, esi: Number(e.target.value) })}
-                  className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Professional Tax (₹)</label>
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">Professional Tax (₹)</label>
                 <input
                   type="number"
                   value={formData.professionalTax}
                   onChange={(e) => setFormData({ ...formData, professionalTax: Number(e.target.value) })}
-                  className="w-full p-2 border border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
@@ -252,24 +252,24 @@ export default function SalaryStructure() {
           </div>
 
           {/* Calculations Summary Box */}
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-3 gap-4 text-center">
+          <div className="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Gross Salary</p>
-              <p className="text-lg font-bold text-gray-800">₹{grossSalary.toLocaleString()}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Gross Salary</p>
+              <p className="text-lg font-bold text-slate-800 dark:text-slate-100">₹{grossSalary.toLocaleString()}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Total Deductions</p>
-              <p className="text-lg font-bold text-rose-600">₹{totalDeductions.toLocaleString()}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Total Deductions</p>
+              <p className="text-lg font-bold text-rose-600 dark:text-rose-400">₹{totalDeductions.toLocaleString()}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Net Payable</p>
-              <p className="text-xl font-black text-emerald-600">₹{netSalary.toLocaleString()}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Net Payable</p>
+              <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">₹{netSalary.toLocaleString()}</p>
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition"
+            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition"
           >
             Save New Salary Template
           </button>

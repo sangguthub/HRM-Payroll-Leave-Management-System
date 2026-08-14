@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface EmailService {
     EmailDeliveryLog sendPayslipEmail(Payslip payslip);
+    EmailDeliveryLog sendPayslipEmailByPayslipId(Long payslipId);
     EmailDeliveryLog retryFailedEmail(Long emailLogId);
     List<EmailLogResponseDto> getAllEmailLogs();
     List<EmailLogResponseDto> getEmployeeEmailLogs(Long employeeId);

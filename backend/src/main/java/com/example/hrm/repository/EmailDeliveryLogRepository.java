@@ -11,4 +11,5 @@ public interface EmailDeliveryLogRepository extends JpaRepository<EmailDeliveryL
     List<EmailDeliveryLog> findByStatus(EmailStatus status);
     List<EmailDeliveryLog> findByEmployeeId(Long employeeId);
     List<EmailDeliveryLog> findByStatusAndRetryCountLessThan(EmailStatus status, Integer maxRetries);
+    java.util.Optional<EmailDeliveryLog> findTopByPayslipIdOrderByIdDesc(Long payslipId);
 }

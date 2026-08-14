@@ -42,6 +42,8 @@ app:
     expiration-ms: 86400000 # 24 hours
   payslip:
     dir: ${PAYSLIP_DIR:./payslips}
+  mail:
+    mock-mode: ${MAIL_MOCK_MODE:true}
 
 springdoc:
   api-docs:

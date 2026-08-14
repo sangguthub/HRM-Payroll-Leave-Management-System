@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
@@ -16,7 +17,7 @@ function AppLayout() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-slate-400 text-sm font-semibold">
+      <div className="min-h-screen bg-slate-900 dark:bg-slate-950 flex flex-col items-center justify-center text-slate-400 text-sm font-semibold">
         <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
         Loading System Engine...
       </div>
@@ -30,7 +31,7 @@ function AppLayout() {
   const isHrOrAdmin = user.role === 'ROLE_HR' || user.role === 'ROLE_ADMIN';
 
   return (
-    <div className="min-h-screen bg-slate-50 flex font-sans text-slate-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex font-sans text-slate-900 dark:text-slate-100 transition-colors duration-200">
       {/* Sleek Sidebar */}
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} role={user.role} />
 
@@ -58,8 +59,10 @@ function AppLayout() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppLayout />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppLayout />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

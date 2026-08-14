@@ -15,7 +15,7 @@ export default function Sidebar({ activeTab, setActiveTab, role }) {
   ];
 
   return (
-    <aside className="w-64 bg-slate-900 text-slate-300 min-h-screen flex flex-col border-r border-slate-800 shrink-0">
+    <aside className="w-64 bg-slate-900 dark:bg-slate-950 text-slate-300 min-h-screen flex flex-col border-r border-slate-800 dark:border-slate-900 shrink-0 transition-colors duration-200">
       {/* Brand Header */}
       <div className="h-16 px-6 flex items-center justify-between border-b border-slate-800/80">
         <div className="flex items-center gap-3">

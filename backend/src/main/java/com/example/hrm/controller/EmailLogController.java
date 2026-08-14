@@ -33,7 +33,19 @@ public class EmailLogController {
     @Operation(summary = "Retry Failed Email", description = "Manually retries sending a failed payslip email (max 3 retries)")
     public ResponseEntity<ApiResponse<EmailLogResponseDto>> retryEmail(@PathVariable Long id) {
         EmailDeliveryLog log = emailService.retryFailedEmail(id);
-        return ResponseEntity.ok(ApiResponse.success("Email retry attempt executed", EmailLogResponseDto.builder()
+        return ResponseEntity.ok(ApiResponse.success("Email retry attempt executed", mapToDto(log)));
+    }
+
+    @PostMapping("/payslip/{payslipId}/send")
+    @PreAuthorize("hasAnyAuthority('ROLE_HR', 'ROLE_ADMIN')")
+    @Operation(summary = "Send Payslip Email", description = "Manually sends or resends a payslip email to an employee")
+    public ResponseEntity<ApiResponse<EmailLogResponseDto>> sendPayslipEmail(@PathVariable Long payslipId) {
+        EmailDeliveryLog log = emailService.sendPayslipEmailByPayslipId(payslipId);
+        return ResponseEntity.ok(ApiResponse.success("Payslip email dispatch executed", mapToDto(log)));
+    }
+
+    private EmailLogResponseDto mapToDto(EmailDeliveryLog log) {
+        return EmailLogResponseDto.builder()
                 .id(log.getId())
                 .employeeId(log.getEmployee().getId())
                 .employeeCode(log.getEmployee().getEmployeeCode())
@@ -45,6 +57,6 @@ public class EmailLogController {
                 .sentAt(log.getSentAt())
                 .failureReason(log.getFailureReason())
                 .retryCount(log.getRetryCount())
-                .build()));
+                .build();
     }
 }
