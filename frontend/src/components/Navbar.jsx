@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
-import { Search, Bell, LogOut, ShieldCheck, UserCheck, Briefcase, Sun, Moon, Sparkles } from 'lucide-react';
+import { Bell, LogOut, ShieldCheck, UserCheck, Briefcase, Sun, Moon, Sparkles, Building2 } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -20,14 +20,11 @@ export default function Navbar() {
 
   return (
     <header className="h-16 bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs transition-all duration-300">
-      {/* Global Search Bar */}
-      <div className="relative w-80">
-        <Search size={16} className="absolute left-3.5 top-2.5 text-slate-400 dark:text-slate-500" />
-        <input
-          type="text"
-          placeholder="Search employees, payroll, payslips..."
-          className="w-full pl-9 pr-3 py-2 bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700/80 rounded-xl text-xs font-medium text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 focus:outline-none shadow-inner transition-all duration-200"
-        />
+      {/* Left Portal Breadcrumb */}
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-black text-slate-900 dark:text-white tracking-wide uppercase bg-slate-100 dark:bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-700/80">
+          ACME Payroll Workspace
+        </span>
       </div>
 
       {/* Right Controls */}
